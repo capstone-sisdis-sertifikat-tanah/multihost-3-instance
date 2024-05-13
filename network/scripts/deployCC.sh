@@ -2,7 +2,7 @@
 
 source scripts/utils.sh
 
-CHANNEL_NAME=${1:-"bpnchannel"}
+CHANNEL_NAME=${1:-"carbonchannel"}
 CC_NAME=${2}
 CC_SRC_PATH=${3}
 CC_SRC_LANGUAGE=${4}
@@ -76,14 +76,14 @@ if [ "$DEPLOYCCSTEP" == "h11" ]; then
   ./scripts/packageCC.sh $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION 
   PACKAGE_ID=$(peer lifecycle chaincode calculatepackageid ${CC_NAME}.tar.gz)
 
-  ## Install chaincode on peer0.bpn
-  infoln "Installing chaincode on peer0.bpn..."
-  installChaincode "bpnp0"
+  ## Install chaincode on peer0.kementrian
+  infoln "Installing chaincode on peer0.kementrian..."
+  installChaincode "kementrianp0"
   ## query whether the chaincode is installed
-  queryInstalled "bpnp0"
+  queryInstalled "kementrianp0"
 
-  ## approve the definition for peer0.bpn
-  approveForMyOrg "bpnp0"
+  ## approve the definition for peer0.kementrian
+  approveForMyOrg "kementrianp0"
 
 elif [ "$DEPLOYCCSTEP" == "h21" ]; then
   #check for prerequisites
@@ -93,42 +93,42 @@ elif [ "$DEPLOYCCSTEP" == "h21" ]; then
   # package the chaincode
   
 
-  ## Install chaincode on peer0.user
-  infoln "Install chaincode on peer0.user..."
-  installChaincode "userp0"
+  ## Install chaincode on peer0.supplychain
+  infoln "Install chaincode on peer0.supplychain..."
+  installChaincode "supplychainp0"
   ## query whether the chaincode is installed
-  queryInstalled "userp0"
+  queryInstalled "supplychainp0"
 
-  ## approve the definition for peer0.user
-  approveForMyOrg "userp0"
+  ## approve the definition for peer0.supplychain
+  approveForMyOrg "supplychainp0"
 
 elif [ "$DEPLOYCCSTEP" == "h31" ]; then
   # package the chaincode
   ./scripts/packageCC.sh $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION 
   PACKAGE_ID=$(peer lifecycle chaincode calculatepackageid ${CC_NAME}.tar.gz)
 
-  ## Install chaincode on peer1.user
-  infoln "Install chaincode on peer1.user..."
-  installChaincode "userp1"
+  ## Install chaincode on peer1.supplychain
+  infoln "Install chaincode on peer1.supplychain..."
+  installChaincode "supplychainp1"
 
   ## query whether the chaincode is installed
-  queryInstalled "userp1"
+  queryInstalled "supplychainp1"
 
 
 elif [ "$DEPLOYCCSTEP" == "h12" ]; then
   ## now that we know for sure both orgs have approved, commit the definition
-  commitChaincodeDefinition "bpnp0" "userp0" "userp1"
+  commitChaincodeDefinition "kementrianp0" "supplychainp0" "supplychainp1"
 
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "bpnp0"
+  queryCommitted "kementrianp0"
 
 elif [ "$DEPLOYCCSTEP" == "h22" ]; then
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "userp0"
+  queryCommitted "supplychainp0"
 
 elif [ "$DEPLOYCCSTEP" == "h32" ]; then
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "userp1"
+  queryCommitted "supplychainp1"
 fi
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
@@ -136,7 +136,7 @@ fi
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  chaincodeInvokeInit 'bpn' 'user'
+  chaincodeInvokeInit 'kementrian' 'supplychain'
 fi
 
 exit 0

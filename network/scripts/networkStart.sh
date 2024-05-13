@@ -39,7 +39,7 @@ function runHost1OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host1-orderer.yaml -f compose/multi-host/docker-compose-host1-bpn.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host1-orderer.yaml -f compose/multi-host/docker-compose-host1-kementrian.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -49,7 +49,7 @@ function runHost2OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host2-user.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host2-supplychain.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -59,7 +59,7 @@ function runHost3OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host3-user.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host3-supplychain.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -75,15 +75,15 @@ function startCAHost1() {
   
   while :
     do
-      if [ ! -f "organizations/fabric-ca/bpn/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/kementrian/tls-cert.pem" ]; then
         sleep 1
       else
         break
       fi
     done
   println "###########################################################################"
-  infoln "Creating Bpn Certificates"
-  createBpn
+  infoln "Creating Kementrian Certificates"
+  createKementrian
   println ""
   
 
@@ -114,7 +114,7 @@ function startCAHost2() {
   . organizations/fabric-ca/registerEnroll.sh
   while :
     do
-      if [ ! -f "organizations/fabric-ca/user/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/supplychain/tls-cert.pem" ]; then
         sleep 1
       else
         break
@@ -122,8 +122,8 @@ function startCAHost2() {
     done
   
   println "###########################################################################"
-  infoln "Creating User Certificates"
-  createUser
+  infoln "Creating SupplyCHain Certificates"
+  createSupplyChain
   println ""
 
 }
@@ -137,8 +137,8 @@ function startCAHost3() {
 
   
   println "###########################################################################"
-  infoln "Creating User Certificates"
-  createUserPeer1
+  infoln "Creating SupplyCHain Certificates"
+  createSupplyChainPeer1
   println ""
 
 }

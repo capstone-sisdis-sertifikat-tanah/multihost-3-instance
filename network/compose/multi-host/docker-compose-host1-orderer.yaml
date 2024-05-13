@@ -4,8 +4,8 @@ volumes:
   orderer.example.com:
 
 networks:
-  bpn_network:
-    name: bpn_network
+  supply_chain_carbon:
+    name: supply_chain_carbon
     external: true
 
 services:
@@ -21,7 +21,7 @@ services:
     working_dir: /root
     command: orderer
     volumes:
-      - ../../channel-artifacts/bpnchannel.block:/var/hyperledger/orderer/orderer.bpnchannel.block
+      - ../../channel-artifacts/carbonchannel.block:/var/hyperledger/orderer/orderer.carbonchannel.block
       - ../../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/etc/hyperledger/orderer/msp
       - ../../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/etc/hyperledger/orderer/tls
       - orderer.example.com:/var/hyperledger/production/orderer
@@ -30,4 +30,4 @@ services:
       - 7053:7053
       - 9443:9443
     networks:
-      - bpn_network
+      - supply_chain_carbon

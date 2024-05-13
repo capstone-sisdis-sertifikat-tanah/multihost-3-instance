@@ -1,5 +1,5 @@
 {
-  "name": "sisdis_bpn_network-${ORG}",
+  "name": "supply_chain_carbon_network-${ORG}",
   "version": "1.0.0",
   "client": {
     "organization": "${ORGCAP}",

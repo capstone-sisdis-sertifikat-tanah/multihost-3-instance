@@ -15,7 +15,7 @@ services:
       # VM variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       # - CORE_VM_ENDPOINT=unix:///host/etc/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=bpn_network
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=supply_chain_carbon
       # Logging variables
       - CORE_LOGGING_LEVEL=INFO
       # Gossip protocol variables
@@ -42,9 +42,9 @@ services:
       # - /etc/run/:/host/etc/run/
       - ../../config:/etc/hyperledger/config
     # extra_hosts:
-    #   - "peer0.bpn.example.com:10.184.0.8"
-    #   - "peer1.user.example.com:10.184.0.9"
-    #   - "peer2.user.example.com:10.184.0.10"
+    #   - "peer0.kementrian.example.com:10.184.0.8"
+    #   - "peer1.supplychain.example.com:10.184.0.9"
+    #   - "peer2.supplychain.example.com:10.184.0.10"
 
   ca-base:
     image: hyperledger/fabric-ca:1.5.7
@@ -57,9 +57,9 @@ services:
       # - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     # extra_hosts:
-    #   - "peer0.bpn.example.com:10.184.0.8"
-    #   - "peer1.user.example.com:10.184.0.9"
-    #   - "peer2.user.example.com:10.184.0.10"
+    #   - "peer0.kementrian.example.com:10.184.0.8"
+    #   - "peer1.supplychain.example.com:10.184.0.9"
+    #   - "peer2.supplychain.example.com:10.184.0.10"
 
   couchdb-base:
     image: couchdb:3.3.2
@@ -69,9 +69,9 @@ services:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
     # extra_hosts:
-    #   - "peer0.bpn.example.com:10.184.0.8"
-    #   - "peer1.user.example.com:10.184.0.9"
-    #   - "peer2.user.example.com:10.184.0.10"
+    #   - "peer0.kementrian.example.com:10.184.0.8"
+    #   - "peer1.supplychain.example.com:10.184.0.9"
+    #   - "peer2.supplychain.example.com:10.184.0.10"
 
   orderer-base:
     image: hyperledger/fabric-orderer:2.5.5
@@ -84,7 +84,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/orderer/orderer.bpnchannel.block
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/orderer/orderer.carbonchannel.block
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/orderer/msp
       - ORDERER_GENERAL_TLS_ENABLED=true
@@ -106,6 +106,6 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     # extra_hosts:
-    #   - "peer0.bpn.example.com:10.184.0.8"
-    #   - "peer1.user.example.com:10.184.0.9"
-    #   - "peer2.user.example.com:10.184.0.10"
+    #   - "peer0.kementrian.example.com:10.184.0.8"
+    #   - "peer1.supplychain.example.com:10.184.0.9"
+    #   - "peer2.supplychain.example.com:10.184.0.10"

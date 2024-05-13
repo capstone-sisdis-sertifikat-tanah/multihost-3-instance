@@ -1,5 +1,5 @@
 ---
-name: sisdis_bpn_network-${ORG}
+name: supply_chain_carbon_network-${ORG}
 version: 1.0.0
 client:
   organization: ${ORGCAP}
@@ -16,24 +16,16 @@ organizations:
       - ca.${ORG}.example.com
 peers:
   peer0.${ORG}.example.com:
-    url: grpcs://10.184.0.9:${P0PORT}
+    url: grpcs://10.184.0.8:${P0PORT}
     tlsCACerts:
       pem: |
         ${PEERPEM}
     grpcOptions:
       ssl-target-name-override: peer0.${ORG}.example.com
       hostnameOverride: peer0.${ORG}.example.com
-  peer1.${ORG}.example.com:
-    url: grpcs://10.184.0.10:${P1PORT}
-    tlsCACerts:
-      pem: |
-        ${PEERPEM}
-    grpcOptions:
-      ssl-target-name-override: peer1.${ORG}.example.com
-      hostnameOverride: peer1.${ORG}.example.com
 certificateAuthorities:
   ca.${ORG}.example.com:
-    url: https://10.184.0.9:${CAPORT}
+    url: https://10.184.0.8:${CAPORT}
     caName: ca.${ORG}.example.com
     tlsCACerts:
       pem:

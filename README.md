@@ -66,37 +66,37 @@ Instance3:
 Instance 1:
 
 ```bash
-./run.sh -ccstep h11 # install on peer0.bpn
+./run.sh -ccstep h11 # install on peer0.kementrian
 ```
 
 Instance 2:
 
 ```bash
-./run.sh -ccstep h21 # install on peer0.user
+./run.sh -ccstep h21 # install on peer0.supplychain
 ```
 
 Instance 3:
 
 ```bash
-./run.sh -ccstep h31 # install on peer1.user
+./run.sh -ccstep h31 # install on peer1.supplychain
 ```
 
 Instance 1:
 
 ```bash
-./run.sh -ccstep h12 # commit on peer0.bpn
+./run.sh -ccstep h12 # commit on peer0.kementrian
 ```
 
 Instance 2:
 
 ```bash
-./run.sh -ccstep h22 # commit on peer0.user
+./run.sh -ccstep h22 # commit on peer0.supplychain
 ```
 
 Instance 3:
 
 ```bash
-./run.sh -ccstep h32 # commit on peer1.user
+./run.sh -ccstep h32 # commit on peer1.supplychain
 ```
 
 ## Invoke test chaincode

@@ -80,7 +80,7 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: UserCA
+  name: SupplyChainCA
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
@@ -237,10 +237,10 @@ ldap:
 # which are always stored in lower case.
 #############################################################################
 affiliations:
-  bpn:
+  kementrian:
     - department1
     - department2
-  user:
+  supplychain:
     - department1
 
 #############################################################################
@@ -301,16 +301,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.user.example.com
+  cn: ca.supplychain.example.com
   names:
     - C: ID
       ST:
       L: "Jakarta"
-      O: user.example.com
+      O: supplychain.example.com
       OU:
   hosts:
     - localhost
-    - user.example.com
+    - supplychain.example.com
     - 10.184.0.9
   ca:
     expiry: 131400h

@@ -14,7 +14,7 @@ function json_ccp {
         -e "s/\${CAPORT}/$5/" \
         -e "s#\${PEERPEM}#$PP#" \
         -e "s#\${CAPEM}#$CP#" \
-        organizations/ccp-template-user.json
+        organizations/ccp-template-supplychain.json
 }
 
 function yaml_ccp {
@@ -27,18 +27,18 @@ function yaml_ccp {
         -e "s/\${CAPORT}/$5/" \
         -e "s#\${PEERPEM}#$PP#" \
         -e "s#\${CAPEM}#$CP#" \
-        organizations/ccp-template-user.yaml | sed -e $'s/\\\\n/\\\n          /g'
+        organizations/ccp-template-supplychain.yaml | sed -e $'s/\\\\n/\\\n          /g'
 }
 
-ORG=user
-ORGCAP=User
+ORG=supplychain
+ORGCAP=SupplyChain
 P0PORT=9051
 P1PORT=9051
 CAPORT=8054
-PEERPEM=organizations/peerOrganizations/user.example.com/tlsca/tlsca.user.example.com-cert.pem
-CAPEM=organizations/peerOrganizations/user.example.com/ca/ca.user.example.com-cert.pem
+PEERPEM=organizations/peerOrganizations/supplychain.example.com/tlsca/tlsca.supplychain.example.com-cert.pem
+CAPEM=organizations/peerOrganizations/supplychain.example.com/ca/ca.supplychain.example.com-cert.pem
 
 
 
-echo "$(json_ccp $ORG $ORGCAP $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/user.example.com/connection-user.json
-echo "$(yaml_ccp $ORG $ORGCAP $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/user.example.com/connection-user.yaml
+echo "$(json_ccp $ORG $ORGCAP $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/supplychain.example.com/connection-supplychain.json
+echo "$(yaml_ccp $ORG $ORGCAP $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/supplychain.example.com/connection-supplychain.yaml

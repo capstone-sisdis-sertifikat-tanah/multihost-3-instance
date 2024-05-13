@@ -10,7 +10,7 @@ DELAY="$2"
 MAX_RETRY="$3"
 VERBOSE="$4"
 BFT="$5"
-: ${CHANNEL_NAME:="bpnchannel"}
+: ${CHANNEL_NAME:="carbonchannel"}
 : ${DELAY:="3"}
 : ${MAX_RETRY:="5"}
 : ${VERBOSE:="false"}
@@ -25,7 +25,7 @@ if [ ! -d "channel-artifacts" ]; then
 fi
 
 createChannelGenesisBlock() {
-  setGlobals 'bpnp0'
+  setGlobals 'kementrianp0'
 	which configtxgen
 	if [ "$?" -ne 0 ]; then
 		fatalln "configtxgen tool not found."
@@ -33,7 +33,7 @@ createChannelGenesisBlock() {
 	local bft_true=$1
 	set -x
 
-	configtxgen -profile BpnChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
+	configtxgen -profile CarbonChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
 
 	res=$?
 	{ set +x; } 2>/dev/null
@@ -107,38 +107,38 @@ joinChannelH1() {
   createChannel
   successln "Channel '$CHANNEL_NAME' created"
 
-  infoln "Joining Bpn peer to the channel..."
-  joinChannel 'bpnp0'
+  infoln "Joining Kementrian peer to the channel..."
+  joinChannel 'kementrianp0'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
 
   infoln "Setting anchor peer"
-  setAnchorPeer 'bpnp0'
+  setAnchorPeer 'kementrianp0'
 
   successln "Success Set Anchor Peer"
 }
 
 joinChannelH2() {
   # Join the peers to the channel
-  infoln "Joining User peer0 to the channel..."
-  joinChannel 'userp0'
+  infoln "Joining Supply Chain peer0 to the channel..."
+  joinChannel 'supplychainp0'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
 
   infoln "Setting anchor peer"
-  setAnchorPeer 'userp0'
+  setAnchorPeer 'supplychainp0'
 
   successln "Success Set Anchor Peer"
 }
 
 joinChannelH3() {
   # Join the peers to the channel
-  infoln "Joining User peer1 to the channel..."
-  joinChannel 'userp1'
+  infoln "Joining Supply Chain peer1 to the channel..."
+  joinChannel 'supplychainp1'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
   infoln "Setting anchor peer"
-  setAnchorPeer 'userp1'
+  setAnchorPeer 'supplychainp1'
 
   successln "Success Set Anchor Peer"
 }

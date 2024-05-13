@@ -40,29 +40,29 @@ Organizations:
     OrdererEndpoints:
       - 10.184.0.8:7050
 
-  - &Bpn
+  - &Kementrian
     # DefaultOrg defines the organization which is used in the sampleconfig
     # of the fabric.git development environment
-    Name: BpnMSP
+    Name: KementrianMSP
     # ID to load the MSP definition as
-    ID: BpnMSP
-    MSPDir: ../organizations/peerOrganizations/bpn.example.com/msp
+    ID: KementrianMSP
+    MSPDir: ../organizations/peerOrganizations/kementrian.example.com/msp
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
     #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('BpnMSP.admin', 'BpnMSP.peer', 'BpnMSP.client')"
+        Rule: "OR('KementrianMSP.admin', 'KementrianMSP.peer', 'KementrianMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('BpnMSP.admin', 'BpnMSP.client')"
+        Rule: "OR('KementrianMSP.admin', 'KementrianMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('BpnMSP.admin')"
+        Rule: "OR('KementrianMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('BpnMSP.peer')"
+        Rule: "OR('KementrianMSP.peer')"
 
     AnchorPeers:
       # AnchorPeers defines the location of peers which can be used
@@ -71,29 +71,29 @@ Organizations:
       - Host: 10.184.0.8
         Port: 7051
 
-  - &User
+  - &SupplyChain
     # DefaultOrg defines the organization which is used in the sampleconfig
     # of the fabric.git development environment
-    Name: UserMSP
+    Name: SupplyChainMSP
     # ID to load the MSP definition as
-    ID: UserMSP
-    MSPDir: ../organizations/peerOrganizations/user.example.com/msp
+    ID: SupplyChainMSP
+    MSPDir: ../organizations/peerOrganizations/supplychain.example.com/msp
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
     #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('UserMSP.admin', 'UserMSP.peer', 'UserMSP.client')"
+        Rule: "OR('SupplyChainMSP.admin', 'SupplyChainMSP.peer', 'SupplyChainMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('UserMSP.admin', 'UserMSP.client')"
+        Rule: "OR('SupplyChainMSP.admin', 'SupplyChainMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('UserMSP.admin')"
+        Rule: "OR('SupplyChainMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('UserMSP.peer')"
+        Rule: "OR('SupplyChainMSP.peer')"
     AnchorPeers:
       # AnchorPeers defines the location of peers which can be used
       # for cross org gossip communication.  Note, this value is only
@@ -282,7 +282,7 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-  BpnChannelUsingRaft:
+  CarbonChannelUsingRaft:
     <<: *ChannelDefaults
     Orderer:
       <<: *OrdererDefaults
@@ -299,6 +299,6 @@ Profiles:
     Application:
       <<: *ApplicationDefaults
       Organizations:
-        - *Bpn
-        - *User
+        - *Kementrian
+        - *SupplyChain
       Capabilities: *ApplicationCapabilities

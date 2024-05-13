@@ -1,18 +1,18 @@
 version: "3.7"
 
 networks:
-  bpn_network:
-    name: bpn_network
+  supply_chain_carbon:
+    name: supply_chain_carbon
     external: true
 
 services:
-  ca.bpn:
-    container_name: ca.bpn.example.com
+  ca.kementrian:
+    container_name: ca.kementrian.example.com
     extends:
       file: docker-compose-base.yaml
       service: ca-base
     environment:
-      - FABRIC_CA_SERVER_CA_NAME=ca.bpn.example.com
+      - FABRIC_CA_SERVER_CA_NAME=ca.kementrian.example.com
       - FABRIC_CA_SERVER_PORT=7054
       - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:17054
     ports:
@@ -20,9 +20,9 @@ services:
       - "17054:17054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
-      - ../../organizations/fabric-ca/bpn:/etc/hyperledger/fabric-ca-server
+      - ../../organizations/fabric-ca/kementrian:/etc/hyperledger/fabric-ca-server
     networks:
-      - bpn_network
+      - supply_chain_carbon
 
   ca.orderer:
     container_name: ca.orderer.example.com
@@ -40,4 +40,4 @@ services:
     volumes:
       - ../../organizations/fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
     networks:
-      - bpn_network
+      - supply_chain_carbon

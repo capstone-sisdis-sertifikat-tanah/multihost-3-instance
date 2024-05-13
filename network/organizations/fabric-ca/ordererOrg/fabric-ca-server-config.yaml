@@ -237,10 +237,10 @@ ldap:
 # which are always stored in lower case.
 #############################################################################
 affiliations:
-  bpn:
+  kementrian:
     - department1
     - department2
-  user:
+  supplychain:
     - department1
 
 #############################################################################
