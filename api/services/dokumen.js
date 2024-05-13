@@ -129,7 +129,7 @@ const generateIdentifier = async (user, idDokumen) => {
     console.log(dokumen)
     const identifier = {}
     network = await fabric.connectToNetwork(
-      'badanpertanahannasional',
+      'bpn',
       'qscc',
       'admin'
     )
@@ -159,7 +159,7 @@ const verify = async (user, identifier) => {
     console.log('masuk ke sini')
     // find block that block hash == identifier
     const network = await fabric.connectToNetwork(
-      'badanpertanahannasional',
+      'bpn',
       'qscc',
       'admin'
     )

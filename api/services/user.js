@@ -71,7 +71,7 @@ const registerAdminBpn = async (
   userType
 ) => {
   try {
-    if (organizationName.toLowerCase() !== 'badanpertanahannasional') {
+    if (organizationName.toLowerCase() !== 'bpn') {
       return iResp.buildErrorResponse(400, 'Invalid organization', null)
     }
 
@@ -79,13 +79,13 @@ const registerAdminBpn = async (
       return iResp.buildErrorResponse(400, 'Invalid role')
     }
 
-    await createUser(username, email, 'BadanPertanahanNasional', 'admin-bpn')
+    await createUser(username, email, 'Bpn', 'admin-bpn')
 
     const userId = uuidv4()
     invokeRegisterUserCc(
       userId,
       username,
-      'BadanPertanahanNasional',
+      'Bpn',
       email,
       'admin-bpn'
     )
@@ -152,14 +152,14 @@ const registerUser = async (
 
 const loginUser = async (username, password) => {
   try {
-    const walletBPN = await fabric.getWallet('badanpertanahannasional')
+    const walletBPN = await fabric.getWallet('bpn')
     const walletUser = await fabric.getWallet('user')
 
     const user1 = await walletBPN.get(username)
     const user2 = await walletUser.get(username)
     let organizationName = ''
     if (user1) {
-      organizationName = 'badanpertanahannasional'
+      organizationName = 'bpn'
     } else if (user2) {
       organizationName = 'user'
     } else {
@@ -370,7 +370,7 @@ const createUser = async (username, email, organizationName, userType) => {
 
   const wallet = await fabric.getWallet(organizationName)
 
-  const walletBPN = await fabric.getWallet('badanpertanahannasional')
+  const walletBPN = await fabric.getWallet('bpn')
   const walletUser = await fabric.getWallet('user')
 
   // Check to see if we've already enrolled the user.

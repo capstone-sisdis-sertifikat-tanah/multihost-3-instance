@@ -19,7 +19,7 @@ const registerAdminBPN = async (req, res) => {
   const result = await userService.registerAdminBpn(
     username,
     email,
-    'BadanPertanahanNasional',
+    'Bpn',
     'admin-bpn'
   )
   res.status(result.code).send(result)
