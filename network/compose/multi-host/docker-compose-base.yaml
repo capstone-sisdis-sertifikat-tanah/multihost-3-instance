@@ -84,7 +84,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/orderer/orderer.carbonchannel.block
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/orderer/orderer.bpnchannel.block
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/orderer/msp
       - ORDERER_GENERAL_TLS_ENABLED=true

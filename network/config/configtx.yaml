@@ -282,7 +282,7 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-  CarbonChannelUsingRaft:
+  BpnChannelUsingRaft:
     <<: *ChannelDefaults
     Orderer:
       <<: *OrdererDefaults

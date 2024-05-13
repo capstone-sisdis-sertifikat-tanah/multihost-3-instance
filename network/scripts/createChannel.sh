@@ -10,7 +10,7 @@ DELAY="$2"
 MAX_RETRY="$3"
 VERBOSE="$4"
 BFT="$5"
-: ${CHANNEL_NAME:="carbonchannel"}
+: ${CHANNEL_NAME:="bpnchannel"}
 : ${DELAY:="3"}
 : ${MAX_RETRY:="5"}
 : ${VERBOSE:="false"}
@@ -33,7 +33,7 @@ createChannelGenesisBlock() {
 	local bft_true=$1
 	set -x
 
-	configtxgen -profile CarbonChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
+	configtxgen -profile BpnChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
 
 	res=$?
 	{ set +x; } 2>/dev/null

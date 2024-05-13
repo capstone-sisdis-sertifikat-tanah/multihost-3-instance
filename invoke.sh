@@ -1,4 +1,4 @@
-CHANNEL_NAME="carbonchannel"
+CHANNEL_NAME="bpnchannel"
 
 export PATH=${PWD}/bin:$PATH
 
