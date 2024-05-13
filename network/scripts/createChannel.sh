@@ -33,7 +33,7 @@ createChannelGenesisBlock() {
 	local bft_true=$1
 	set -x
 
-	configtxgen -profile CarbonChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
+	configtxgen -profile BpnChannelUsingRaft -outputBlock ./channel-artifacts/${CHANNEL_NAME}.block -channelID $CHANNEL_NAME
 
 	res=$?
 	{ set +x; } 2>/dev/null
