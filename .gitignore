@@ -1,29 +1,29 @@
-# # Fabric binaries
-# fabric/
-# fabric/bin/
+# Fabric binaries
+fabric/
+fabric/bin/
 
-# #node modules
-# api/node_modules/
+#node modules
+api/node_modules/
 
-# #Artifact
-# /channel-artifacts/*.tx
-# /channel-artifacts/*.block
-# /ledgers
-# /ledgers-backup
-# /channel-artifacts/*.json
-# /org3-artifacts/crypto-config/*
-# organizations
-# system-genesis-block/*
-# *.tar.gz
-# log.txt
-# bin
-# builders
-# channel-artifacts
-# config
+#Artifact
+/channel-artifacts/*.tx
+/channel-artifacts/*.block
+/ledgers
+/ledgers-backup
+/channel-artifacts/*.json
+/org3-artifacts/crypto-config/*
+organizations
+system-genesis-block/*
+*.tar.gz
+log.txt
+bin
+builders
+channel-artifacts
+config
 
-# #Go
-# */vendor
-# chaincode/*/vendor
-# *.tar.gz
+#Go
+*/vendor
+chaincode/*/vendor
+*.tar.gz
 
-# sampleconfig
+sampleconfig
