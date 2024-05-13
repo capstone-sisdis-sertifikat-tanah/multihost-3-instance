@@ -4,8 +4,8 @@ volumes:
   peer0.kementrian.example.com:
 
 networks:
-  supply_chain_carbon:
-    name: supply_chain_carbon
+  bpn_network:
+    name: bpn_network
     external: true
 
 services:
@@ -17,7 +17,7 @@ services:
     ports:
       - "5984:5984"
     networks:
-      - supply_chain_carbon
+      - bpn_network
 
   peer0.kementrian.example.com:
     container_name: peer0.kementrian.example.com
@@ -51,7 +51,7 @@ services:
       - 7051:7051
       - 9444:9444
     networks:
-      - supply_chain_carbon
+      - bpn_network
 
   cli:
     container_name: cli
@@ -74,4 +74,4 @@ services:
     depends_on:
       - peer0.kementrian.example.com
     networks:
-      - supply_chain_carbon
+      - bpn_network

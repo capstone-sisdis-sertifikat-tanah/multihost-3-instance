@@ -1,8 +1,8 @@
 version: "3.7"
 
 networks:
-  supply_chain_carbon:
-    name: supply_chain_carbon
+  bpn_network:
+    name: bpn_network
     external: true
 
 services:
@@ -22,4 +22,4 @@ services:
     volumes:
       - ../../organizations/fabric-ca/supplychain:/etc/hyperledger/fabric-ca-server
     networks:
-      - supply_chain_carbon
+      - bpn_network

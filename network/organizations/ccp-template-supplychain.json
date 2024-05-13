@@ -1,5 +1,5 @@
 {
-  "name": "supply_chain_carbon_network-${ORG}",
+  "name": "bpn_network-${ORG}",
   "version": "1.0.0",
   "client": {
     "organization": "${ORGCAP}",
