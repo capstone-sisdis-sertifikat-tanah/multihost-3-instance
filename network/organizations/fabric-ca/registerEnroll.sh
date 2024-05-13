@@ -7,7 +7,7 @@ function createBpn() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/bpn.example.com/
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.8:7054 --caname ca.bpn.example.com --tls.certfiles "${PWD}/organizations/fabric-ca/bpn/ca-cert.pem"
+  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.8:7054 --caname ca.bpn.example.com --csr.hosts "10.184.0.8" --tls.certfiles "${PWD}/organizations/fabric-ca/bpn/ca-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
@@ -93,7 +93,7 @@ function createSupplyChain() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/supplychain.example.com/
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.9:8054 --caname ca.supplychain.example.com --tls.certfiles "${PWD}/organizations/fabric-ca/supplychain/ca-cert.pem"
+  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.9:8054 --caname ca.supplychain.example.com --csr.hosts "10.184.0.9" --tls.certfiles "${PWD}/organizations/fabric-ca/supplychain/ca-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
@@ -201,7 +201,7 @@ function createOrderer() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/ordererOrganizations/example.com
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.8:9054 --caname ca.orderer.example.com --tls.certfiles "${PWD}/organizations/fabric-ca/ordererOrg/ca-cert.pem"
+  fabric-ca-client enroll -u https://admin:adminpw@10.184.0.8:9054 --caname ca.orderer.example.com --csr.hosts "10.184.0.8" --tls.certfiles "${PWD}/organizations/fabric-ca/ordererOrg/ca-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
