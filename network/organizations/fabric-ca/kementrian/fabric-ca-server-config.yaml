@@ -311,7 +311,7 @@ csr:
   hosts:
     - localhost
     - bpn.example.com
-    - 10.184.0.8
+    - 10.184.0.11
   ca:
     expiry: 131400h
     pathlength: 1

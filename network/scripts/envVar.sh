@@ -30,7 +30,7 @@ setGlobals() {
     export CORE_PEER_LOCALMSPID="BpnMSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_BPN_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/bpn.example.com/users/Admin@bpn.example.com/msp
-    export CORE_PEER_ADDRESS="10.184.0.8:7051"
+    export CORE_PEER_ADDRESS="10.184.0.11:7051"
     export PEER_NAME="peer0.bpn.example.com"
 
   elif [ $USING_ORG = 'supplychainp0' ]; then
@@ -68,7 +68,7 @@ setGlobalsCLI() {
   fi
 
   if [ $USING_ORG = 'bpnp0' ]; then
-    export CORE_PEER_ADDRESS="10.184.0.8:7051"
+    export CORE_PEER_ADDRESS="10.184.0.11:7051"
   elif [ $USING_ORG = 'supplychainp0' ]; then
     export CORE_PEER_ADDRESS="10.184.0.9:9051"
   elif [ $USING_ORG = 'supplychainp1' ]; then
