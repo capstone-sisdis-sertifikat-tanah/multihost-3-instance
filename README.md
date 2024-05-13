@@ -72,13 +72,13 @@ Instance 1:
 Instance 2:
 
 ```bash
-./run.sh -ccstep h21 # install on peer0.supplychain
+./run.sh -ccstep h21 # install on peer0.user
 ```
 
 Instance 3:
 
 ```bash
-./run.sh -ccstep h31 # install on peer1.supplychain
+./run.sh -ccstep h31 # install on peer1.user
 ```
 
 Instance 1:
@@ -90,13 +90,13 @@ Instance 1:
 Instance 2:
 
 ```bash
-./run.sh -ccstep h22 # commit on peer0.supplychain
+./run.sh -ccstep h22 # commit on peer0.user
 ```
 
 Instance 3:
 
 ```bash
-./run.sh -ccstep h32 # commit on peer1.supplychain
+./run.sh -ccstep h32 # commit on peer1.user
 ```
 
 ## Invoke test chaincode

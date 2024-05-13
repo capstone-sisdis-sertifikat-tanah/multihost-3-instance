@@ -138,7 +138,7 @@ startDockerContainer() {
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
                     ${CC_NAME}_ccaas_image:latest
 
-    ${CONTAINER_CLI} run  --rm -d --name peer0supplychain_${CC_NAME}_ccaas \
+    ${CONTAINER_CLI} run  --rm -d --name peer0user_${CC_NAME}_ccaas \
                   --network bpn_network \
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
@@ -156,7 +156,7 @@ startDockerContainer() {
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
                     ${CC_NAME}_ccaas_image:latest"
-    infoln "    ${CONTAINER_CLI} run --rm -d --name peer0supplychain_${CC_NAME}_ccaas  \
+    infoln "    ${CONTAINER_CLI} run --rm -d --name peer0user_${CC_NAME}_ccaas  \
                   --network bpn_network \
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
@@ -171,10 +171,10 @@ buildDockerImages
 ## package the chaincode
 packageChaincode
 
-## Install chaincode on peer0.bpn and peer0.supplychain
+## Install chaincode on peer0.bpn and peer0.user
 infoln "Installing chaincode on peer0.bpn..."
 installChaincode 1
-infoln "Install chaincode on peer0.supplychain..."
+infoln "Install chaincode on peer0.user..."
 installChaincode 2
 
 resolveSequence
@@ -186,17 +186,17 @@ queryInstalled 1
 approveForMyOrg 1
 
 ## check whether the chaincode definition is ready to be committed
-## expect bpn to have approved and supplychain not to
-checkCommitReadiness 1 "\"BpnMSP\": true" "\"SupplyChainMSP\": false"
-checkCommitReadiness 2 "\"BpnMSP\": true" "\"SupplyChainMSP\": false"
+## expect bpn to have approved and user not to
+checkCommitReadiness 1 "\"BpnMSP\": true" "\"UserMSP\": false"
+checkCommitReadiness 2 "\"BpnMSP\": true" "\"UserMSP\": false"
 
-## now approve also for supplychain
+## now approve also for user
 approveForMyOrg 2
 
 ## check whether the chaincode definition is ready to be committed
 ## expect them both to have approved
-checkCommitReadiness 1 "\"BpnMSP\": true" "\"SupplyChainMSP\": true"
-checkCommitReadiness 2 "\"BpnMSP\": true" "\"SupplyChainMSP\": true"
+checkCommitReadiness 1 "\"BpnMSP\": true" "\"UserMSP\": true"
+checkCommitReadiness 2 "\"BpnMSP\": true" "\"UserMSP\": true"
 
 ## now that we know for sure both orgs have approved, commit the definition
 commitChaincodeDefinition 1 2

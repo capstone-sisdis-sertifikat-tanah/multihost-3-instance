@@ -165,8 +165,8 @@ function networkCAUpHost2() {
   println ""
 
   println "###########################################################################"
-  infoln "Generating CCP files for SupplyChain"
-  organizations/ccp-generate-supplychain.sh
+  infoln "Generating CCP files for User"
+  organizations/ccp-generate-user.sh
   println ""
 
   $CONTAINER_CLI ps -a
@@ -267,7 +267,7 @@ function networkUp() {
   fi
 }
 
-# call the script to create the channel, join the peers of bpn and supplychain,
+# call the script to create the channel, join the peers of bpn and user,
 # and then update the anchor peers for each organization
 function createChannel() {
   if ! $CONTAINER_CLI info > /dev/null 2>&1 ; then
@@ -384,16 +384,16 @@ function networkDown() {
   # COMPOSE_CA_FILES="-f compose/${COMPOSE_FILE_CA} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_CA}"
   # COMPOSE_FILES="${COMPOSE_BASE_FILES} ${COMPOSE_COUCH_FILES} ${COMPOSE_CA_FILES}"
 
-  # # stop org3 containers also in addition to bpn and supplychain, in case we were running sample to add org3
+  # # stop org3 containers also in addition to bpn and user, in case we were running sample to add org3
   # COMPOSE_ORG3_BASE_FILES="-f addOrg3/compose/${COMPOSE_FILE_ORG3_BASE} -f addOrg3/compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_ORG3_BASE}"
   # COMPOSE_ORG3_COUCH_FILES="-f addOrg3/compose/${COMPOSE_FILE_ORG3_COUCH} -f addOrg3/compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_ORG3_COUCH}"
   # COMPOSE_ORG3_CA_FILES="-f addOrg3/compose/${COMPOSE_FILE_ORG3_CA} -f addOrg3/compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_ORG3_CA}"
   # COMPOSE_ORG3_FILES="${COMPOSE_ORG3_BASE_FILES} ${COMPOSE_ORG3_COUCH_FILES} ${COMPOSE_ORG3_CA_FILES}"
 
-  COMPOSE_FILES="-f compose/docker-compose-orderer.yaml -f compose/docker-compose-bpn.yaml -f compose/docker-compose-supplychain.yaml -f compose/docker-compose-ca.yaml"
+  COMPOSE_FILES="-f compose/docker-compose-orderer.yaml -f compose/docker-compose-bpn.yaml -f compose/docker-compose-user.yaml -f compose/docker-compose-ca.yaml"
   COMPOSE_FILES=" $COMPOSE_FILES -f compose/docker-compose-host1-ca.yaml -f compose/docker-compose-host1-bpn.yaml -f compose/docker-compose-host1-orderer.yaml"
-  COMPOSE_FILES=" $COMPOSE_FILES -f compose/docker-compose-host2-ca.yaml -f compose/docker-compose-host2-supplychain.yaml"
-  COMPOSE_FILES=" $COMPOSE_FILES -f compose/docker-compose-host3-supplychain.yaml"
+  COMPOSE_FILES=" $COMPOSE_FILES -f compose/docker-compose-host2-ca.yaml -f compose/docker-compose-host2-user.yaml"
+  COMPOSE_FILES=" $COMPOSE_FILES -f compose/docker-compose-host3-user.yaml"
 
   if [ "${CONTAINER_CLI}" == "docker" ]; then
     DOCKER_SOCK=$DOCKER_SOCK ${CONTAINER_CLI_COMPOSE} ${COMPOSE_FILES}  down --volumes --remove-orphans
@@ -408,7 +408,7 @@ function networkDown() {
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
     # Bring down the network, deleting the volumes
-    ${CONTAINER_CLI} volume rm docker_orderer.example.com docker_peer0.bpn.example.com docker_peer0.supplychain.example.com
+    ${CONTAINER_CLI} volume rm docker_orderer.example.com docker_peer0.bpn.example.com docker_peer0.user.example.com
     #Cleanup the chaincode containers
     clearContainers
     #Cleanup images
@@ -417,7 +417,7 @@ function networkDown() {
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf system-genesis-block/*.block organizations/peerOrganizations organizations/ordererOrganizations'
     ## remove fabric ca artifacts
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/bpn/msp organizations/fabric-ca/bpn/tls-cert.pem organizations/fabric-ca/bpn/ca-cert.pem organizations/fabric-ca/bpn/IssuerPublicKey organizations/fabric-ca/bpn/IssuerRevocationPublicKey organizations/fabric-ca/bpn/fabric-ca-server.db'
-    ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/supplychain/msp organizations/fabric-ca/supplychain/tls-cert.pem organizations/fabric-ca/supplychain/ca-cert.pem organizations/fabric-ca/supplychain/IssuerPublicKey organizations/fabric-ca/supplychain/IssuerRevocationPublicKey organizations/fabric-ca/supplychain/fabric-ca-server.db'
+    ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/user/msp organizations/fabric-ca/user/tls-cert.pem organizations/fabric-ca/user/ca-cert.pem organizations/fabric-ca/user/IssuerPublicKey organizations/fabric-ca/user/IssuerRevocationPublicKey organizations/fabric-ca/user/fabric-ca-server.db'
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/ordererOrg/msp organizations/fabric-ca/ordererOrg/tls-cert.pem organizations/fabric-ca/ordererOrg/ca-cert.pem organizations/fabric-ca/ordererOrg/IssuerPublicKey organizations/fabric-ca/ordererOrg/IssuerRevocationPublicKey organizations/fabric-ca/ordererOrg/fabric-ca-server.db'
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf addOrg3/fabric-ca/org3/msp addOrg3/fabric-ca/org3/tls-cert.pem addOrg3/fabric-ca/org3/ca-cert.pem addOrg3/fabric-ca/org3/IssuerPublicKey addOrg3/fabric-ca/org3/IssuerRevocationPublicKey addOrg3/fabric-ca/org3/fabric-ca-server.db'
     # remove channel and script artifacts

@@ -49,7 +49,7 @@ function runHost2OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host2-supplychain.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host2-user.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -59,7 +59,7 @@ function runHost3OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host3-supplychain.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host3-user.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -114,7 +114,7 @@ function startCAHost2() {
   . organizations/fabric-ca/registerEnroll.sh
   while :
     do
-      if [ ! -f "organizations/fabric-ca/supplychain/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/user/tls-cert.pem" ]; then
         sleep 1
       else
         break
@@ -123,7 +123,7 @@ function startCAHost2() {
   
   println "###########################################################################"
   infoln "Creating SupplyCHain Certificates"
-  createSupplyChain
+  createUser
   println ""
 
 }
@@ -138,7 +138,7 @@ function startCAHost3() {
   
   println "###########################################################################"
   infoln "Creating SupplyCHain Certificates"
-  createSupplyChainPeer1
+  createUserPeer1
   println ""
 
 }

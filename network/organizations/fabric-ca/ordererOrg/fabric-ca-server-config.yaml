@@ -240,7 +240,7 @@ affiliations:
   bpn:
     - department1
     - department2
-  supplychain:
+  user:
     - department1
 
 #############################################################################
@@ -311,7 +311,7 @@ csr:
   hosts:
     - localhost
     - example.com
-    - 10.184.0.11
+    - 10.184.0.8
   ca:
     expiry: 131400h
     pathlength: 1

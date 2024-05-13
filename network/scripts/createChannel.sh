@@ -120,25 +120,25 @@ joinChannelH1() {
 
 joinChannelH2() {
   # Join the peers to the channel
-  infoln "Joining Supply Chain peer0 to the channel..."
-  joinChannel 'supplychainp0'
+  infoln "Joining User peer0 to the channel..."
+  joinChannel 'userp0'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
 
   infoln "Setting anchor peer"
-  setAnchorPeer 'supplychainp0'
+  setAnchorPeer 'userp0'
 
   successln "Success Set Anchor Peer"
 }
 
 joinChannelH3() {
   # Join the peers to the channel
-  infoln "Joining Supply Chain peer1 to the channel..."
-  joinChannel 'supplychainp1'
+  infoln "Joining User peer1 to the channel..."
+  joinChannel 'userp1'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
   infoln "Setting anchor peer"
-  setAnchorPeer 'supplychainp1'
+  setAnchorPeer 'userp1'
 
   successln "Success Set Anchor Peer"
 }

@@ -1,7 +1,7 @@
 version: "3.7"
 
 volumes:
-  peer1.supplychain.example.com:
+  peer1.user.example.com:
 
 networks:
   bpn_network:
@@ -19,33 +19,33 @@ services:
     networks:
       - bpn_network
 
-  peer1.supplychain.example.com:
-    container_name: peer1.supplychain.example.com
+  peer1.user.example.com:
+    container_name: peer1.user.example.com
     extends:
       file: docker-compose-base.yaml
       service: peer-base
     environment:
       # Peer specific variables
-      - CORE_PEER_ID=peer1.supplychain.example.com
-      - CORE_PEER_ADDRESS=peer1.supplychain.example.com:9051
+      - CORE_PEER_ID=peer1.user.example.com
+      - CORE_PEER_ADDRESS=peer1.user.example.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.supplychain.example.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.user.example.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.supplychain.example.com:9051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.supplychain.example.com:9051
-      - CORE_PEER_LOCALMSPID=SupplyChainMSP
-      - CORE_OPERATIONS_LISTENADDRESS=peer1.supplychain.example.com:9445
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.user.example.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.user.example.com:9051
+      - CORE_PEER_LOCALMSPID=UserMSP
+      - CORE_OPERATIONS_LISTENADDRESS=peer1.user.example.com:9445
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer1supplychain"}
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer1user"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
     depends_on:
       - couchdb2
     volumes:
-      - ../../organizations/peerOrganizations/supplychain.example.com/peers/peer1.supplychain.example.com:/etc/hyperledger/fabric
-      - ../../organizations/peerOrganizations/supplychain.example.com/peers/peer1.supplychain.example.com/msp:/etc/hyperledger/fabric/msp
-      - ../../organizations/peerOrganizations/supplychain.example.com/peers/peer1.supplychain.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer1.supplychain.example.com:/var/hyperledger/production
+      - ../../organizations/peerOrganizations/user.example.com/peers/peer1.user.example.com:/etc/hyperledger/fabric
+      - ../../organizations/peerOrganizations/user.example.com/peers/peer1.user.example.com/msp:/etc/hyperledger/fabric/msp
+      - ../../organizations/peerOrganizations/user.example.com/peers/peer1.user.example.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.user.example.com:/var/hyperledger/production
     command: peer node start
     ports:
       - 9051:9051
@@ -72,6 +72,6 @@ services:
       - ../../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../../config:/etc/hyperledger/config
     depends_on:
-      - peer1.supplychain.example.com
+      - peer1.user.example.com
     networks:
       - bpn_network

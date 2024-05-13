@@ -18,8 +18,8 @@ services:
       - ./docker/peercfg:/etc/hyperledger/peercfg
       - ${DOCKER_SOCK}:/host/var/run/docker.sock
 
-  peer0.supplychain.example.com:
-    container_name: peer0.supplychain.example.com
+  peer0.user.example.com:
+    container_name: peer0.user.example.com
     image: hyperledger/fabric-peer:2.5.5
     labels:
       service: hyperledger-fabric

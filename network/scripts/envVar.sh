@@ -13,8 +13,8 @@
 export CORE_PEER_TLS_ENABLED=true
 export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/tlsca/tlsca.orderer.example.com-cert.pem
 export PEER0_BPN_CA=${PWD}/organizations/peerOrganizations/bpn.example.com/tlsca/tlsca.bpn.example.com-cert.pem
-export PEER0_SUPPLYCHAIN_CA=${PWD}/organizations/peerOrganizations/supplychain.example.com/tlsca/tlsca.supplychain.example.com-cert.pem
-export PEER1_SUPPLYCHAIN_CA=${PWD}/organizations/peerOrganizations/supplychain.example.com/tlsca/tlsca.supplychain.example.com-cert.pem
+export PEER0_USER_CA=${PWD}/organizations/peerOrganizations/user.example.com/tlsca/tlsca.user.example.com-cert.pem
+export PEER1_USER_CA=${PWD}/organizations/peerOrganizations/user.example.com/tlsca/tlsca.user.example.com-cert.pem
 
 # Set environment variables for the peer org
 setGlobals() {
@@ -30,22 +30,22 @@ setGlobals() {
     export CORE_PEER_LOCALMSPID="BpnMSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_BPN_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/bpn.example.com/users/Admin@bpn.example.com/msp
-    export CORE_PEER_ADDRESS="10.184.0.11:7051"
+    export CORE_PEER_ADDRESS="10.184.0.8:7051"
     export PEER_NAME="peer0.bpn.example.com"
 
-  elif [ $USING_ORG = 'supplychainp0' ]; then
-    export CORE_PEER_LOCALMSPID="SupplyChainMSP"
-    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_SUPPLYCHAIN_CA
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/supplychain.example.com/users/Admin@supplychain.example.com/msp
+  elif [ $USING_ORG = 'userp0' ]; then
+    export CORE_PEER_LOCALMSPID="UserMSP"
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_USER_CA
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/user.example.com/users/Admin@user.example.com/msp
     export CORE_PEER_ADDRESS="10.184.0.9:9051"
-    export PEER_NAME="peer0.supplychain.example.com"
+    export PEER_NAME="peer0.user.example.com"
     
-  elif [ $USING_ORG = 'supplychainp1' ]; then
-    export CORE_PEER_LOCALMSPID="SupplyChainMSP"
-    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER1_SUPPLYCHAIN_CA
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/supplychain.example.com/users/Admin@supplychain.example.com/msp
+  elif [ $USING_ORG = 'userp1' ]; then
+    export CORE_PEER_LOCALMSPID="UserMSP"
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER1_USER_CA
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/user.example.com/users/Admin@user.example.com/msp
     export CORE_PEER_ADDRESS="10.184.0.10:9051"
-    export PEER_NAME="peer1.supplychain.example.com"
+    export PEER_NAME="peer1.user.example.com"
   else
     echo $USING_ORG
     errorln "ORG Unknown"
@@ -68,10 +68,10 @@ setGlobalsCLI() {
   fi
 
   if [ $USING_ORG = 'bpnp0' ]; then
-    export CORE_PEER_ADDRESS="10.184.0.11:7051"
-  elif [ $USING_ORG = 'supplychainp0' ]; then
+    export CORE_PEER_ADDRESS="10.184.0.8:7051"
+  elif [ $USING_ORG = 'userp0' ]; then
     export CORE_PEER_ADDRESS="10.184.0.9:9051"
-  elif [ $USING_ORG = 'supplychainp1' ]; then
+  elif [ $USING_ORG = 'userp1' ]; then
     export CORE_PEER_ADDRESS="10.184.0.10:9051"
   else
     errorln "ORG Unknown"

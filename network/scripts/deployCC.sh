@@ -93,42 +93,42 @@ elif [ "$DEPLOYCCSTEP" == "h21" ]; then
   # package the chaincode
   
 
-  ## Install chaincode on peer0.supplychain
-  infoln "Install chaincode on peer0.supplychain..."
-  installChaincode "supplychainp0"
+  ## Install chaincode on peer0.user
+  infoln "Install chaincode on peer0.user..."
+  installChaincode "userp0"
   ## query whether the chaincode is installed
-  queryInstalled "supplychainp0"
+  queryInstalled "userp0"
 
-  ## approve the definition for peer0.supplychain
-  approveForMyOrg "supplychainp0"
+  ## approve the definition for peer0.user
+  approveForMyOrg "userp0"
 
 elif [ "$DEPLOYCCSTEP" == "h31" ]; then
   # package the chaincode
   ./scripts/packageCC.sh $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION 
   PACKAGE_ID=$(peer lifecycle chaincode calculatepackageid ${CC_NAME}.tar.gz)
 
-  ## Install chaincode on peer1.supplychain
-  infoln "Install chaincode on peer1.supplychain..."
-  installChaincode "supplychainp1"
+  ## Install chaincode on peer1.user
+  infoln "Install chaincode on peer1.user..."
+  installChaincode "userp1"
 
   ## query whether the chaincode is installed
-  queryInstalled "supplychainp1"
+  queryInstalled "userp1"
 
 
 elif [ "$DEPLOYCCSTEP" == "h12" ]; then
   ## now that we know for sure both orgs have approved, commit the definition
-  commitChaincodeDefinition "bpnp0" "supplychainp0" "supplychainp1"
+  commitChaincodeDefinition "bpnp0" "userp0" "userp1"
 
   ## query on both orgs to see that the definition committed successfully
   queryCommitted "bpnp0"
 
 elif [ "$DEPLOYCCSTEP" == "h22" ]; then
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "supplychainp0"
+  queryCommitted "userp0"
 
 elif [ "$DEPLOYCCSTEP" == "h32" ]; then
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "supplychainp1"
+  queryCommitted "userp1"
 fi
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
@@ -136,7 +136,7 @@ fi
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  chaincodeInvokeInit 'bpn' 'supplychain'
+  chaincodeInvokeInit 'bpn' 'user'
 fi
 
 exit 0
