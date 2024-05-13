@@ -1,0 +1,25 @@
+version: "3.7"
+
+networks:
+  bpn_network:
+    name: bpn_network
+    external: true
+
+services:
+  ca.user:
+    container_name: ca.user.example.com
+    extends:
+      file: docker-compose-base.yaml
+      service: ca-base
+    environment:
+      - FABRIC_CA_SERVER_CA_NAME=ca.user.example.com
+      - FABRIC_CA_SERVER_PORT=8054
+      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:18054
+    ports:
+      - "8054:8054"
+      - "18054:18054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ../../organizations/fabric-ca/user:/etc/hyperledger/fabric-ca-server
+    networks:
+      - bpn_network

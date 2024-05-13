@@ -1,0 +1,95 @@
+version: "3.7"
+
+services:
+  peer-base:
+    image: hyperledger/fabric-peer:2.5.5
+    labels:
+      service: hyperledger-fabric
+    environment:
+      # Configuration variables
+      - FABRIC_CFG_PATH=/etc/hyperledger/config
+      # Logging variables
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      # Core variables
+      # VM variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      # - CORE_VM_ENDPOINT=unix:///host/etc/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=bpn_network
+      # Logging variables
+      - CORE_LOGGING_LEVEL=INFO
+      # Gossip protocol variables
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+      # MSP variables
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      # Profile variables
+      - CORE_PEER_PROFILE_ENABLED=false
+      # TLS variables
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # CouchDB variables
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    volumes:
+      - /var/run/:/host/var/run/
+      # - /etc/run/:/host/etc/run/
+      - ../../config:/etc/hyperledger/config
+
+  ca-base:
+    image: hyperledger/fabric-ca:1.5.7
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      # - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+
+  couchdb-base:
+    image: couchdb:3.3.2
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+
+  orderer-base:
+    image: hyperledger/fabric-orderer:2.5.5
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/orderer
+      - FABRIC_CA_CLIENT_TLS_CERTFILES=../../organizations/ordererOrganizations/example.com/ca/ca.orderer.example.com-cert.pem
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/orderer/orderer.bpnchannel.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_TLS_CLIENTROOTCAS=[/etc/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/etc/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/etc/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/etc/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/etc/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/etc/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_METRICS_PROVIDER=prometheus
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
+    command: orderer
