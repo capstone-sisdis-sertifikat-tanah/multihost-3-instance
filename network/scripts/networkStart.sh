@@ -122,7 +122,7 @@ function startCAHost2() {
     done
   
   println "###########################################################################"
-  infoln "Creating SupplyCHain Certificates"
+  infoln "Creating User Certificates"
   createUser
   println ""
 
@@ -137,7 +137,7 @@ function startCAHost3() {
 
   
   println "###########################################################################"
-  infoln "Creating SupplyCHain Certificates"
+  infoln "Creating User Certificates"
   createUserPeer1
   println ""
 
