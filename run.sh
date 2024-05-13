@@ -32,14 +32,9 @@ if [ "$CHANNELSTEP" != "NA" ]; then
 fi
 
 if [ "$DEPLOYCCSTEP" != "NA" ]; then
-    ./network.sh deployCC -ccn cecontract   -ccp ../chaincode/cecontract   -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn cspcontract  -ccp ../chaincode/cspcontract  -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn ctcontract   -ccp ../chaincode/ctcontract   -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn divcontract  -ccp ../chaincode/divcontract  -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn pecontract   -ccp ../chaincode/pecontract   -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn shcontract   -ccp ../chaincode/shcontract   -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn vecontract   -ccp ../chaincode/vecontract   -ccl go -ccstep $DEPLOYCCSTEP
+    ./network.sh deployCC -ccn aktacontract   -ccp ../chaincode/aktacontract   -ccl go -ccstep $DEPLOYCCSTEP
+    ./network.sh deployCC -ccn certcontract  -ccp ../chaincode/certcontract  -ccl go -ccstep $DEPLOYCCSTEP
+    ./network.sh deployCC -ccn dokcontract  -ccp ../chaincode/dokcontract  -ccl go -ccstep $DEPLOYCCSTEP
     ./network.sh deployCC -ccn usercontract -ccp ../chaincode/usercontract -ccl go -ccstep $DEPLOYCCSTEP
-    ./network.sh deployCC -ccn sccontract   -ccp ../chaincode/sccontract   -ccl go -ccstep $DEPLOYCCSTEP
 fi
 
