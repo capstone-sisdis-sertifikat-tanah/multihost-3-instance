@@ -39,7 +39,7 @@ function runHost1OrgContainer() {
   infoln "Starting docker container for All Organizations"
   println ""
 
-  COMPOSE_FILES="-f compose/multi-host/docker-compose-host1-orderer.yaml -f compose/multi-host/docker-compose-host1-kementrian.yaml"
+  COMPOSE_FILES="-f compose/multi-host/docker-compose-host1-orderer.yaml -f compose/multi-host/docker-compose-host1-bpn.yaml"
   docker-compose ${COMPOSE_FILES} up -d 2>&1
 
   println ""
@@ -75,15 +75,15 @@ function startCAHost1() {
   
   while :
     do
-      if [ ! -f "organizations/fabric-ca/kementrian/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/bpn/tls-cert.pem" ]; then
         sleep 1
       else
         break
       fi
     done
   println "###########################################################################"
-  infoln "Creating Kementrian Certificates"
-  createKementrian
+  infoln "Creating Bpn Certificates"
+  createBpn
   println ""
   
 

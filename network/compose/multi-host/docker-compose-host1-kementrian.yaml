@@ -1,7 +1,7 @@
 version: "3.7"
 
 volumes:
-  peer0.kementrian.example.com:
+  peer0.bpn.example.com:
 
 networks:
   bpn_network:
@@ -19,33 +19,33 @@ services:
     networks:
       - bpn_network
 
-  peer0.kementrian.example.com:
-    container_name: peer0.kementrian.example.com
+  peer0.bpn.example.com:
+    container_name: peer0.bpn.example.com
     extends:
       file: docker-compose-base.yaml
       service: peer-base
     environment:
       # Peer specific variables
-      - CORE_PEER_ID=peer0.kementrian.example.com
-      - CORE_PEER_ADDRESS=peer0.kementrian.example.com:7051
+      - CORE_PEER_ID=peer0.bpn.example.com
+      - CORE_PEER_ADDRESS=peer0.bpn.example.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.kementrian.example.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.bpn.example.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.kementrian.example.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.kementrian.example.com:7051
-      - CORE_PEER_LOCALMSPID=KementrianMSP
-      - CORE_OPERATIONS_LISTENADDRESS=peer0.kementrian.example.com:9444
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.bpn.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.bpn.example.com:7051
+      - CORE_PEER_LOCALMSPID=BpnMSP
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.bpn.example.com:9444
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0kementrian"}
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0bpn"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
     depends_on:
       - couchdb0
     volumes:
-      - ../../organizations/peerOrganizations/kementrian.example.com/peers/peer0.kementrian.example.com:/etc/hyperledger/fabric
-      - ../../organizations/peerOrganizations/kementrian.example.com/peers/peer0.kementrian.example.com/msp:/etc/hyperledger/fabric/msp
-      - ../../organizations/peerOrganizations/kementrian.example.com/peers/peer0.kementrian.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer0.kementrian.example.com:/var/hyperledger/production
+      - ../../organizations/peerOrganizations/bpn.example.com/peers/peer0.bpn.example.com:/etc/hyperledger/fabric
+      - ../../organizations/peerOrganizations/bpn.example.com/peers/peer0.bpn.example.com/msp:/etc/hyperledger/fabric/msp
+      - ../../organizations/peerOrganizations/bpn.example.com/peers/peer0.bpn.example.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.bpn.example.com:/var/hyperledger/production
     command: peer node start
     ports:
       - 7051:7051
@@ -72,6 +72,6 @@ services:
       - ../../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../../config:/etc/hyperledger/config
     depends_on:
-      - peer0.kementrian.example.com
+      - peer0.bpn.example.com
     networks:
       - bpn_network

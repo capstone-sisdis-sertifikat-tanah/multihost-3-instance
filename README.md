@@ -66,7 +66,7 @@ Instance3:
 Instance 1:
 
 ```bash
-./run.sh -ccstep h11 # install on peer0.kementrian
+./run.sh -ccstep h11 # install on peer0.bpn
 ```
 
 Instance 2:
@@ -84,7 +84,7 @@ Instance 3:
 Instance 1:
 
 ```bash
-./run.sh -ccstep h12 # commit on peer0.kementrian
+./run.sh -ccstep h12 # commit on peer0.bpn
 ```
 
 Instance 2:

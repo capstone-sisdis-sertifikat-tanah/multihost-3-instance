@@ -25,7 +25,7 @@ if [ ! -d "channel-artifacts" ]; then
 fi
 
 createChannelGenesisBlock() {
-  setGlobals 'kementrianp0'
+  setGlobals 'bpnp0'
 	which configtxgen
 	if [ "$?" -ne 0 ]; then
 		fatalln "configtxgen tool not found."
@@ -107,13 +107,13 @@ joinChannelH1() {
   createChannel
   successln "Channel '$CHANNEL_NAME' created"
 
-  infoln "Joining Kementrian peer to the channel..."
-  joinChannel 'kementrianp0'
+  infoln "Joining Bpn peer to the channel..."
+  joinChannel 'bpnp0'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
 
   infoln "Setting anchor peer"
-  setAnchorPeer 'kementrianp0'
+  setAnchorPeer 'bpnp0'
 
   successln "Success Set Anchor Peer"
 }

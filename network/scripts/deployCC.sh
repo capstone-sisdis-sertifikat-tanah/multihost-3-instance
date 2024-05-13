@@ -76,14 +76,14 @@ if [ "$DEPLOYCCSTEP" == "h11" ]; then
   ./scripts/packageCC.sh $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION 
   PACKAGE_ID=$(peer lifecycle chaincode calculatepackageid ${CC_NAME}.tar.gz)
 
-  ## Install chaincode on peer0.kementrian
-  infoln "Installing chaincode on peer0.kementrian..."
-  installChaincode "kementrianp0"
+  ## Install chaincode on peer0.bpn
+  infoln "Installing chaincode on peer0.bpn..."
+  installChaincode "bpnp0"
   ## query whether the chaincode is installed
-  queryInstalled "kementrianp0"
+  queryInstalled "bpnp0"
 
-  ## approve the definition for peer0.kementrian
-  approveForMyOrg "kementrianp0"
+  ## approve the definition for peer0.bpn
+  approveForMyOrg "bpnp0"
 
 elif [ "$DEPLOYCCSTEP" == "h21" ]; then
   #check for prerequisites
@@ -117,10 +117,10 @@ elif [ "$DEPLOYCCSTEP" == "h31" ]; then
 
 elif [ "$DEPLOYCCSTEP" == "h12" ]; then
   ## now that we know for sure both orgs have approved, commit the definition
-  commitChaincodeDefinition "kementrianp0" "supplychainp0" "supplychainp1"
+  commitChaincodeDefinition "bpnp0" "supplychainp0" "supplychainp1"
 
   ## query on both orgs to see that the definition committed successfully
-  queryCommitted "kementrianp0"
+  queryCommitted "bpnp0"
 
 elif [ "$DEPLOYCCSTEP" == "h22" ]; then
   ## query on both orgs to see that the definition committed successfully
@@ -136,7 +136,7 @@ fi
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  chaincodeInvokeInit 'kementrian' 'supplychain'
+  chaincodeInvokeInit 'bpn' 'supplychain'
 fi
 
 exit 0

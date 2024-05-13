@@ -5,8 +5,8 @@
 
 version: "3.7"
 services:
-  peer0.kementrian.example.com:
-    container_name: peer0.kementrian.example.com
+  peer0.bpn.example.com:
+    container_name: peer0.bpn.example.com
     image: hyperledger/fabric-peer:2.5.5
     labels:
       service: hyperledger-fabric

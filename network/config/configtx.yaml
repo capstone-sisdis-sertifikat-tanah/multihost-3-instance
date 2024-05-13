@@ -40,29 +40,29 @@ Organizations:
     OrdererEndpoints:
       - 10.184.0.8:7050
 
-  - &Kementrian
+  - &Bpn
     # DefaultOrg defines the organization which is used in the sampleconfig
     # of the fabric.git development environment
-    Name: KementrianMSP
+    Name: BpnMSP
     # ID to load the MSP definition as
-    ID: KementrianMSP
-    MSPDir: ../organizations/peerOrganizations/kementrian.example.com/msp
+    ID: BpnMSP
+    MSPDir: ../organizations/peerOrganizations/bpn.example.com/msp
     # Policies defines the set of policies at this level of the config tree
     # For organization policies, their canonical path is usually
     #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('KementrianMSP.admin', 'KementrianMSP.peer', 'KementrianMSP.client')"
+        Rule: "OR('BpnMSP.admin', 'BpnMSP.peer', 'BpnMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('KementrianMSP.admin', 'KementrianMSP.client')"
+        Rule: "OR('BpnMSP.admin', 'BpnMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('KementrianMSP.admin')"
+        Rule: "OR('BpnMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('KementrianMSP.peer')"
+        Rule: "OR('BpnMSP.peer')"
 
     AnchorPeers:
       # AnchorPeers defines the location of peers which can be used
@@ -299,6 +299,6 @@ Profiles:
     Application:
       <<: *ApplicationDefaults
       Organizations:
-        - *Kementrian
+        - *Bpn
         - *SupplyChain
       Capabilities: *ApplicationCapabilities

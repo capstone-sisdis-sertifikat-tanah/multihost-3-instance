@@ -87,7 +87,7 @@ type KelembabanUdara struct {
 }
 
 // Pembuatan Supply Chain
-// 1. Admin perusahaan request ke admin Kementrian (admin perusahaan membuat object supplychain)
+// 1. Admin perusahaan request ke admin Bpn (admin perusahaan membuat object supplychain)
 // 2. status SupplyChain Pending
 // 3. Admin kementerian Review, kalo setuju approved kalo ga setuju reject
 // 4. Kalo Setuju ngebuat semua proposal supply chain dengan yang isinya list perusahaan

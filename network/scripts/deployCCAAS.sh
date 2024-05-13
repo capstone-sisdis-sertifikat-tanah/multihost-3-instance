@@ -132,7 +132,7 @@ startDockerContainer() {
   if [ "$CCAAS_DOCKER_RUN" = "true" ]; then
     infoln "Starting the Chaincode-as-a-Service docker container..."
     set -x
-    ${CONTAINER_CLI} run --rm -d --name peer0kementrian_${CC_NAME}_ccaas  \
+    ${CONTAINER_CLI} run --rm -d --name peer0bpn_${CC_NAME}_ccaas  \
                   --network bpn_network \
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
@@ -151,7 +151,7 @@ startDockerContainer() {
   else
   
     infoln "Not starting docker containers; these are the commands we would have run"
-    infoln "    ${CONTAINER_CLI} run --rm -d --name peer0kementrian_${CC_NAME}_ccaas  \
+    infoln "    ${CONTAINER_CLI} run --rm -d --name peer0bpn_${CC_NAME}_ccaas  \
                   --network bpn_network \
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
@@ -171,8 +171,8 @@ buildDockerImages
 ## package the chaincode
 packageChaincode
 
-## Install chaincode on peer0.kementrian and peer0.supplychain
-infoln "Installing chaincode on peer0.kementrian..."
+## Install chaincode on peer0.bpn and peer0.supplychain
+infoln "Installing chaincode on peer0.bpn..."
 installChaincode 1
 infoln "Install chaincode on peer0.supplychain..."
 installChaincode 2
@@ -182,21 +182,21 @@ resolveSequence
 ## query whether the chaincode is installed
 queryInstalled 1
 
-## approve the definition for kementrian
+## approve the definition for bpn
 approveForMyOrg 1
 
 ## check whether the chaincode definition is ready to be committed
-## expect kementrian to have approved and supplychain not to
-checkCommitReadiness 1 "\"KementrianMSP\": true" "\"SupplyChainMSP\": false"
-checkCommitReadiness 2 "\"KementrianMSP\": true" "\"SupplyChainMSP\": false"
+## expect bpn to have approved and supplychain not to
+checkCommitReadiness 1 "\"BpnMSP\": true" "\"SupplyChainMSP\": false"
+checkCommitReadiness 2 "\"BpnMSP\": true" "\"SupplyChainMSP\": false"
 
 ## now approve also for supplychain
 approveForMyOrg 2
 
 ## check whether the chaincode definition is ready to be committed
 ## expect them both to have approved
-checkCommitReadiness 1 "\"KementrianMSP\": true" "\"SupplyChainMSP\": true"
-checkCommitReadiness 2 "\"KementrianMSP\": true" "\"SupplyChainMSP\": true"
+checkCommitReadiness 1 "\"BpnMSP\": true" "\"SupplyChainMSP\": true"
+checkCommitReadiness 2 "\"BpnMSP\": true" "\"SupplyChainMSP\": true"
 
 ## now that we know for sure both orgs have approved, commit the definition
 commitChaincodeDefinition 1 2
