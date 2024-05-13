@@ -120,7 +120,7 @@ joinChannelH1() {
 
 joinChannelH2() {
   # Join the peers to the channel
-  infoln "Joining Supply Chain peer0 to the channel..."
+  infoln "Joining User peer0 to the channel..."
   joinChannel 'userp0'
 
   successln "Success Join Channel '$CHANNEL_NAME'"
@@ -133,7 +133,7 @@ joinChannelH2() {
 
 joinChannelH3() {
   # Join the peers to the channel
-  infoln "Joining Supply Chain peer1 to the channel..."
+  infoln "Joining User peer1 to the channel..."
   joinChannel 'userp1'
 
   successln "Success Join Channel '$CHANNEL_NAME'"

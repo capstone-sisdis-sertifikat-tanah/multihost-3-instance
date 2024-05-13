@@ -15,7 +15,7 @@ const sendEmail = async (email, text) => {
     const mailOptions = {
       from: 'tacarbonfootprint@gmail.com',
       to: email,
-      subject: 'Password Akun Carbon Supply Chain',
+      subject: 'Password Akun Sistem Penerbitan Sertifikat Tanah',
       text: text,
     }
     transporter.sendMail(mailOptions, function (error, info) {
