@@ -28,12 +28,26 @@ const getById = async (user, id) => {
       'aktacontract',
       user.username
     )
-    const result = await network.contract.submitTransaction('GetAktaById', id)
+    const result = JSON.parse(
+      await network.contract.submitTransaction('GetAktaById', id)
+    )
+
+    const isApproved =
+      result.status === 'Approve' || result.status === 'Sudah Tidak Berlaku'
+
+    const signatures = isApproved
+      ? await fabric.getAllSignature(result.TxId)
+      : null
+
+    const resultWithSignatures = {
+      ...result,
+      signatures,
+    }
     network.gateway.disconnect()
     return iResp.buildSuccessResponse(
       200,
       `Successfully get Akta ${id}`,
-      JSON.parse(result)
+      resultWithSignatures
     )
   } catch (error) {
     return iResp.buildErrorResponse(500, 'Something wrong', error.message)

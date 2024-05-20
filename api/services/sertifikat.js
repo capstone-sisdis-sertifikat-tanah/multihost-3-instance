@@ -28,12 +28,24 @@ const getById = async (user, id) => {
       'certcontract',
       user.username
     )
-    const result = await network.contract.submitTransaction('GetCertById', id)
+    const result = JSON.parse(
+      await network.contract.submitTransaction('GetCertById', id)
+    )
+
+    const isApproved = result.akta?.status === 'Approve'
+    const signatures = isApproved
+      ? await fabric.getAllSignature(result.TxId)
+      : null
+
+    const resultWithSignatures = {
+      ...result,
+      signatures,
+    }
     network.gateway.disconnect()
     return iResp.buildSuccessResponse(
       200,
       `Successfully get Certificate ${id}`,
-      JSON.parse(result)
+      resultWithSignatures
     )
   } catch (error) {
     return iResp.buildErrorResponse(500, 'Something wrong', error.message)
@@ -121,7 +133,6 @@ const generateIdentifier = async (user, idCertificate) => {
     const sertifikat = JSON.parse(
       await network.contract.evaluateTransaction('GetCertById', idCertificate)
     )
-    console.log(sertifikat)
     network.gateway.disconnect()
 
     const identifier = {}
@@ -154,7 +165,7 @@ const verify = async (user, identifier) => {
   try {
     // find block that block hash == identifier
     const network = await fabric.connectToNetwork(
-      'bpn',
+      'badanpertanahannasional',
       'qscc',
       'admin'
     )
@@ -164,58 +175,38 @@ const verify = async (user, identifier) => {
       Buffer.from(identifier.sertifikat, 'hex')
     )
 
-    // Get data from block
-    const blockData = BlockDecoder.decode(blockSertifikat).data.data
+    function getSertifikatAndAktaIdFromBlock(blockData) {
+      const [found] = BlockDecoder.decode(blockData).data.data.filter((obj) => {
+        const item =
+          obj.payload.data.actions[0].payload.chaincode_proposal_payload.input
+            .chaincode_spec.input.args
+        const jsonString = Buffer.from(item[1]).toString()
 
-    let certificateIndex = -1 // Initialize index for certificate object
-    let certificateID = null // Initialize certificate ID variable
+        const isJsonString = jsonString.includes('{')
 
-    // Iterate through transactions in the block
-    for (let i = 0; i < blockData.length; i++) {
-      const transaction = blockData[i]
+        const toCheck = isJsonString ? JSON.parse(jsonString) : jsonString
 
-      // Check if the transaction contains the certificate object
-      if (
-        transaction.payload &&
-        transaction.payload.data &&
-        transaction.payload.data.actions
-      ) {
-        const actions = transaction.payload.data.actions
-
-        for (let j = 0; j < actions.length; j++) {
-          const action = actions[j]
-
-          // Check if the action payload contains the certificate ID
-          if (
-            action.payload &&
-            action.payload.chaincode_proposal_payload &&
-            action.payload.chaincode_proposal_payload.input &&
-            action.payload.chaincode_proposal_payload.input.chaincode_spec &&
-            action.payload.chaincode_proposal_payload.input.chaincode_spec
-              .input &&
-            action.payload.chaincode_proposal_payload.input.chaincode_spec.input
-              .args
-          ) {
-            const args =
-              action.payload.chaincode_proposal_payload.input.chaincode_spec
-                .input.args
-
-            // Assuming the certificate ID is always at a specific index
-            if (args.length > 1) {
-              const id = Buffer.from(args[1]).toString()
-
-              // Check if this is the latest certificate ID
-              if (certificateIndex === -1 || i > certificateIndex) {
-                certificateIndex = i
-                certificateID = id
-              }
-            }
-          }
+        if (typeof toCheck === 'object' && toCheck.hasOwnProperty('lokasi')) {
+          return true
         }
+
+        return false
+      })
+
+      const item =
+        found.payload.data.actions[0].payload.chaincode_proposal_payload.input
+          .chaincode_spec.input.args
+
+      const sertifikat = JSON.parse(Buffer.from(item[1]).toString())
+
+      return {
+        idSertifikat: sertifikat.id,
+        idAkta: sertifikat.akta.id,
       }
     }
 
-    const idSertifikat = JSON.parse(certificateID).dokumen.idSertifikat
+    const { idSertifikat, idAkta } =
+      getSertifikatAndAktaIdFromBlock(blockSertifikat)
 
     //query data ijazah, transkrip, nilai
     network.gateway.disconnect()
@@ -233,6 +224,10 @@ const verify = async (user, identifier) => {
 
     const parseData = JSON.parse(cert)
 
+    if (parseData.akta.id !== idAkta) {
+      throw new Error('akta-error')
+    }
+
     parseData.signatures = await fabric.getAllSignature(parseData.TxId)
     const data = {
       sertifikat: parseData,
@@ -249,10 +244,13 @@ const verify = async (user, identifier) => {
       result
     )
   } catch (error) {
-    console.log('ERROR', error)
+    console.log(error)
+    const isAktaError = error.message === 'akta-error'
     const result = {
       success: true,
-      message: 'Sertifikat tidak valid.',
+      message: isAktaError
+        ? 'Akta jual beli sertifikat sudah tidak berlaku'
+        : 'Identifier tidak valid.',
     }
     return iResp.buildErrorResponse(500, 'Something wrong', result)
   }
