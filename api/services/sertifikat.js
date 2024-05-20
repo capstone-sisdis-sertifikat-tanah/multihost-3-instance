@@ -165,7 +165,7 @@ const verify = async (user, identifier) => {
   try {
     // find block that block hash == identifier
     const network = await fabric.connectToNetwork(
-      'badanpertanahannasional',
+      'bpn',
       'qscc',
       'admin'
     )
