@@ -1,4 +1,4 @@
-## Install fabric binaries
+## Install requirements
 
 ```bash
 ./install-requirements.sh
